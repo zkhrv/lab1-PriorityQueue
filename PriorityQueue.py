@@ -1,63 +1,63 @@
-class PriorityQueue:
-    def __init__(self):
-        self.size = 0
-        self.arr = []
+class PriorityQueue:  # объявление класса PriorityQueue
+    def __init__(self):  # конструктор класса
+        self.size = 0  # инициализация переменной size, обозначающей размер очереди
+        self.arr = []  # инициализация списка arr, который хранит элементы очереди
 
-    def add_element(self, tmp):
-        self.arr.append(tmp)
-        self.size += 1
-        i = self.size // 2 - 1
-        while i >= 0:
-            self.rewrite(self.arr, self.size, i)
+    def add_element(self, tmp):  # метод добавления элемента в очередь
+        self.arr.append(tmp)  # добавление элемента в список arr
+        self.size += 1  # увеличение размера очереди на 1
+        i = self.size // 2 - 1  # определение индекса, с которого начнется перестройка кучи
+        while i >= 0:  # перестройка кучи
+            self.rewrite(self.arr, self.size, i)  # вызов метода rewrite
             i -= 1
 
-    def rewrite(self, arr, n, max):
-        i = max
-        id_left = i * 2 + 1
-        id_right = i * 2 + 2
-        if id_left < n and arr[id_left] > arr[i]:
-            i = id_left
-        if id_right < n and arr[id_right] > arr[i]:
-            i = id_right
-        if i != max:
-            arr[i], arr[max] = arr[max], arr[i]
-            self.rewrite(arr, n, i)
+    def rewrite(self, arr, n, max):  # метод перестройки кучи
+        i = max  # текущий индекс
+        id_left = i * 2 + 1  # индекс левого потомка
+        id_right = i * 2 + 2  # индекс правого потомка
+        if id_left < n and arr[id_left] > arr[i]:  # если значение левого потомка больше значения текущего элемента
+            i = id_left  # обновляем текущий индекс
+        if id_right < n and arr[id_right] > arr[i]:  # если значение правого потомка больше значения текущего элемента
+            i = id_right  # обновляем текущий индекс
+        if i != max:  # если текущий индекс не равен начальному индексу
+            arr[i], arr[max] = arr[max], arr[i]  # меняем местами значения текущего и начального элементов
+            self.rewrite(arr, n, i)  # рекурсивный вызов метода rewrite
 
-    def del_max_el(self):
-        if self.size > 0:
-            self.arr.pop(0)
-            self.size -= 1
-            i = self.size // 2 - 1
-            while i >= 0:
-                self.rewrite(self.arr, self.size, i)
+    def del_max_el(self):  # метод удаления максимального элемента из очереди
+        if self.size > 0:  # если очередь не пуста
+            self.arr.pop(0)  # удаляем первый элемент списка arr
+            self.size -= 1  # уменьшаем размер очереди на 1
+            i = self.size // 2 - 1  # определение индекса, с которого начнется перестройка кучи
+            while i >= 0:  # перестройка кучи
+                self.rewrite(self.arr, self.size, i)  # вызов метода rewrite
                 i -= 1
-        else:
+        else:  # если очередь пуста
             print("Очередь пуста!")
 
-    def del_element(self, del_el):
-        if self.size > 0:
-            tmp = -1
-            for i in range(self.size):
-                if self.arr[i] == del_el:
-                    tmp = i
-                    break
-            if tmp >= 0:
-                self.arr.pop(tmp)
-                self.size -= 1
-                i = self.size // 2 - 1
-                while i >= 0:
-                    self.rewrite(self.arr, self.size, i)
-                    i -= 1
-            else:
+    def del_element(self, del_el):  # метод удаления элемента из очереди
+        if self.size > 0:  # если очередь не пуста
+            tmp = -1  # временная переменная для хранения индекса удаляемого элемента
+            for i in range(self.size):  # перебираем все элементы очереди
+                if self.arr[i] == del_el:  # если текущий элемент равен удаляемому
+                    tmp = i  # запоминаем его индекс
+                    break  # прерываем цикл
+            if tmp >= 0:  # если удаляемый элемент найден
+                self.arr.pop(tmp)  # удаляем элемент из очереди по индексу
+                self.size -= 1  # уменьшаем размер очереди
+                i = self.size // 2 - 1  # устанавливаем начальное значение i для цикла
+                while i >= 0:  # запускаем цикл с i равным размеру очереди деленному на 2 минус 1
+                    self.rewrite(self.arr, self.size, i)  # перестраиваем дерево
+                    i -= 1  # уменьшаем i на 1
+            else:  # если удаляемый элемент не найден
                 print("Такого элемента нет в очереди")
-        else:
+        else:  # если очередь пуста
             print("Очередь пуста!")
 
-    def get_max_el(self):
-        return self.arr[0]
+    def get_max_el(self):  # метод получения максимального элемента
+        return self.arr[0]  # возвращаем первый элемент в очереди (максимальный)
 
-    def count(self):
-        print(f"Элементов в очереди: {self.size}")
+    def count(self):  # метод для подсчета элементов в очереди
+        print(f"Элементов в очереди: {self.size}")  # выводим на экран количество элементов в очереди 
 
-    def write(self):
-        print(self.arr)
+    def write(self): # метод для вывода очереди в консоль 
+        print(self.arr) 
